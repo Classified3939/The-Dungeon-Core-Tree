@@ -3,12 +3,13 @@ let modInfo = {
 	id: "dungeoncoreC39",
 	author: "Classified39",
 	pointsName: "Mana",
-	modFiles: ["layers.js", "tree.js"],
+	modFiles: ["layers/lore.js", "layers/traps.js", "layers/combat.js", "tree.js", "gameUtils/loreStrings.js",
+	"gameUtils/trapUnit.js","gameUtils/enemyUnit.js", "gameUtils/enemyTypes.js","gameUtils/waveData.js"],
 
 	discordName: "",
 	discordLink: "",
 	initialStartPoints: new Decimal (0), // Used for hard resets and new players
-	offlineLimit: 1,  // In hours
+	offlineLimit: 0,  // In hours
 }
 
 // Set your version in num and name
@@ -37,12 +38,56 @@ function canGenPoints(){
 	return true
 }
 
+function getBaseGain(){
+	let base = new Decimal(1.0);
+	return base
+}
+
+function getLoss(){
+	let loss = new Decimal(0.0);
+	loss = loss.add(Decimal.log2(Decimal.div(player.points,10)))
+	for (let i = 3; i < Decimal.log10(player.points); i++){
+		loss = Decimal.pow(loss,1.15);
+	}
+	if (Decimal.gte(loss,getBaseGain())){
+		loss = getBaseGain();
+	}
+	if (Decimal.lte(loss,0)){
+		loss = new Decimal(0.0);
+	}
+	return new Decimal(loss);
+}
+
+function getSoftcapLevel(){
+	if (Decimal.gte(Decimal.log10(player.points),3)){
+		return Decimal.log10(player.points).sub(2).toFixed(0);
+	}
+	else{
+		return new Decimal(0);
+	}
+}
+
+function getDisplayText(){
+	if (typeof(player) == "undefined") return " "
+	return "Base Gain: " + getBaseGain().toFixed(2) + " -=- Losing: " + getLoss().toFixed(2) + (Decimal.gte(getSoftcapLevel(),1) ? " -=- Softcap Lv. " + getSoftcapLevel() : ""); 
+}
 // Calculate points/sec!
 function getPointGen() {
 	if(!canGenPoints())
-		return new Decimal(0)
-
-	let gain = new Decimal(1)
+		return new Decimal(0);
+	let gain = getBaseGain();
+	let loss = new Decimal(0);
+	if (Decimal.gte(player.points,1)){
+		if (player)
+		loss = getLoss();
+	}
+	gain = Decimal.sub(gain,loss);
+	if (Decimal.lte(gain,1e-3)){
+		gain = new Decimal(0);
+		if (Decimal.lte(player.points.ceil().sub(player.points),0.1)){
+			gain = new Decimal(1e-3);
+		}
+	}
 	return gain
 }
 
@@ -52,6 +97,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
+	() => getDisplayText(),
 ]
 
 // Determines when the game "ends"
