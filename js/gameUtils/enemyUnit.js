@@ -13,16 +13,12 @@ class EnemyUnit{
     }
 
     getDamageTaken(attackingObject){
-        return attackingObject.use();
+        return attackingObject.getDamageDone();
     }
 
     attack(attackedObject){
-        this.hitPoints = this.hitPoints.sub(getDamageTaken(attackedObject));
-        if (this.hitPoints.lte(0)) 
-        {
-            this.killed = true;
-            return new Decimal(0);
-        }
-        return this.getDamageDone(attackedObject);
+        this.hitPoints = this.hitPoints.sub(this.getDamageTaken(attackedObject));
+        if (this.hitPoints.lte(0)) this.killed = true;
+        attackedObject.use(this.getDamageDone(attackedObject));
     }
 }

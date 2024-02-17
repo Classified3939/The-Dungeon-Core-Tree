@@ -24,6 +24,5 @@ addLayer("l", {
                     ["infobox","lore1"]
                 ]
         },
-        "Combat":{}
     },
 })

@@ -4,7 +4,8 @@ let modInfo = {
 	author: "Classified39",
 	pointsName: "Mana",
 	modFiles: ["layers/lore.js", "layers/traps.js", "layers/combat.js", "tree.js", "gameUtils/loreStrings.js",
-	"gameUtils/trapUnit.js","gameUtils/enemyUnit.js", "gameUtils/enemyTypes.js","gameUtils/waveData.js"],
+	"gameUtils/trapUnit.js","gameUtils/enemyUnit.js", "gameUtils/enemyTypes.js","gameUtils/waveData.js",
+	"gameUtils/trapTypes.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -39,7 +40,7 @@ function canGenPoints(){
 }
 
 function getBaseGain(){
-	let base = new Decimal(1.0);
+	let base = player.c.points;
 	return base
 }
 

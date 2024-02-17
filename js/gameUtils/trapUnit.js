@@ -9,12 +9,15 @@ class TrapUnit{
         this.usedUp = false;
     }
 
-    use(hitPoints){
-        if (this.usedUp) return new Decimal(0);
-        this.hitPoints = this.hitPoints.sub(hitPoints);
-        if (this.hitPoints.lte(0)) this.usedUp = true;
+    getDamageDone(){
         let thisDamage = this.damage;
         if (this.critChance.gte(Math.random())) thisDamage = thisDamage.mul(this.critMult);
         return thisDamage;
+    }
+
+    use(hitPoints){
+        if (this.usedUp) return
+        this.hitPoints = this.hitPoints.sub(hitPoints);
+        if (this.hitPoints.lte(0)) this.usedUp = true;
     }
 }
