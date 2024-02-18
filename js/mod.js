@@ -3,7 +3,7 @@ let modInfo = {
 	id: "dungeoncoreC39",
 	author: "Classified39",
 	pointsName: "Mana",
-	modFiles: ["layers/lore.js", "layers/traps.js", "layers/combat.js", "tree.js", "gameUtils/loreStrings.js",
+	modFiles: ["layers/lore.js", "layers/traps.js", "layers/combat.js", "layers/achievements.js", "tree.js", "gameUtils/loreStrings.js",
 	"gameUtils/trapUnit.js","gameUtils/enemyUnit.js", "gameUtils/enemyTypes.js","gameUtils/waveData.js",
 	"gameUtils/trapTypes.js"],
 

@@ -44,4 +44,7 @@ addLayer("t", {
             }
         }
     },
+    update(diff){
+        player.t.maxPoints = new Decimal(3).add(Decimal.floor(player.c.points.div(2)));
+    }
 })

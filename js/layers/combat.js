@@ -29,8 +29,8 @@ addLayer("c", {
                 player.c.combatCooldown = new Decimal(10);
                 player.points = new Decimal(0);
                 for (enemy of player.c.enemies){
-                    if (enemy.killed) continue;
                     for (trap of player.c.traps){
+                        if (enemy.killed) continue;
                         if (trap.usedUp) continue;
                         enemy.attack(trap);
                     }
@@ -59,7 +59,7 @@ addLayer("c", {
             var enemyLevel = player.c.enemies[0].level;
             var enemyHealth = player.c.enemies[0].hitPoints
             if (player.c.enemies.length == 1){
-                waveString = waveString + "1 " + enemyName + " ("+ enemyHealth + " Health)";
+                waveString = waveString + "1x " + enemyName + " ("+ enemyHealth + " Health)";
                 return waveString;
             }
             var enemyNumber = 0;
@@ -69,14 +69,14 @@ addLayer("c", {
                     enemyNumber++;
                 }
                 else{
-                    waveString = waveString + enemyNumber + " " + enemyName  + " ("+ enemyHealth + " Health)" + "<br>";
+                    waveString = waveString + enemyNumber + "x " + enemyName  + " ("+ enemyHealth + " Health)" + "<br>";
                     enemyName = player.c.enemies[i].name;
                     enemyLevel = player.c.enemies[i].level;
                     enemyHealth = player.c.enemies[i].hitPoints
                     enemyNumber = 1;
                 }
             }
-            waveString = waveString + enemyNumber + " " + enemyName  + " ("+ enemyHealth + " Health)";
+            waveString = waveString + enemyNumber + "x " + enemyName  + " ("+ enemyHealth + " Health)";
             return waveString;
         }],
         "blank",
@@ -92,24 +92,45 @@ addLayer("c", {
             let trapName = player.c.traps[0].name;
             let trapHealth = player.c.traps[0].hitPoints;
             let trapDamage = player.c.traps[0].damage;
+            let baseDamage = new Decimal(0);
+            let totalDamage = new Decimal(0);
             if (player.c.traps.length === 1){
-                attackString = attackString + "You have 1 "+ trapName + " (" + trapDamage + " damage) with " + trapHealth + " hitpoints remaining";
+                attackString = attackString + "You have 1 "+ trapName + " (" + trapDamage + 
+                    " damage) with " + trapHealth + " hitpoints remaining<br>";
+                baseDamage = baseDamage.add(trapDamage);
+                totalDamage = totalDamage.add(Decimal.times(trapDamage,trapHealth));
+                attackString = attackString + "You do a base of " + baseDamage + " damage to each enemy hit.<br>"
+                attackstring = attackString + "Each enemy goes through all traps once, unless the enemy is killed or the trap breaks.<br>"
+                attackString = attackString + "If facing multiple enemies, you might deal up to " 
+                    + totalDamage + " damage total."
                 return attackString;
             }
             let trapNumber = 0;
             for (let i = 0; i < player.c.traps.length; i++){
                 if (player.c.traps[i].name == trapName && new Decimal(player.c.traps[i].hitPoints).equals(trapHealth)){
                     trapNumber++;
+                    baseDamage = baseDamage.add(trapDamage);
+                    totalDamage = totalDamage.add(Decimal.times(trapDamage,trapHealth));
                 }
                 else{
-                    attackString = attackString + "You have " + trapNumber + " " + trapName + " (" + Decimal.mul(trapDamage,trapNumber) + " damage) with " + trapHealth + " hitpoints remaining<br>";
+                    attackString = attackString + "You have " + trapNumber + " " + 
+                        trapName + " (" + Decimal.mul(trapDamage,trapNumber) + 
+                        " damage) with " + trapHealth + " hitpoints remaining<br>";
                     trapName = player.c.traps[i].name;
                     trapHealth = player.c.traps[i].hitPoints;
                     trapDamage = player.c.traps[i].damage;
                     trapNumber = 1;
+                    baseDamage = baseDamage.add(trapDamage);
+                    totalDamage = totalDamage.add(Decimal.times(trapDamage,trapHealth));
                 }
             }
-            attackString = attackString + "You have " + trapNumber + " " + trapName + " (" + Decimal.mul(trapDamage,trapNumber) + " damage) with " + trapHealth + " hitpoints remaining";
+            attackString = attackString + "You have " + trapNumber + " " + trapName + 
+                " (" + Decimal.mul(trapDamage,trapNumber) + " damage) with " + trapHealth 
+                + " hitpoints remaining<br>";
+            attackString = attackString + "<br>You do a base of " + baseDamage + " damage to each enemy hit.<br>";
+            attackString = attackString + "Each enemy goes through all traps once, unless the enemy is killed or the trap breaks.<br>";
+            attackString = attackString + "If facing multiple enemies, you might deal  up to " 
+                + totalDamage + " damage total."
             return attackString;
         }],
     ],
