@@ -21,7 +21,6 @@ addLayer("a", {
             },
             onComplete(){
                 player.a.points = player.a.points.add(1);
-                player.l.lore2Unlocked = true;
                 player.l.shouldNotify = true;
             }
         },
@@ -33,7 +32,18 @@ addLayer("a", {
             },
             onComplete(){
                 player.a.points = player.a.points.add(1);
-                player.l.lore3Unlocked = true;
+                player.l.shouldNotify = true;
+                player.r.unlocked = true;
+            }
+        },
+        13:{
+            name: "A New Challenger!",
+            tooltip: "Get to Wave 4.<br>Unlocks the HeroPedia! (and a new Logbook entry).",
+            done(){
+                return player.c.points.gte(4);
+            },
+            onComplete(){
+                player.a.points = player.a.points.add(1);
                 player.l.shouldNotify = true;
             }
         }

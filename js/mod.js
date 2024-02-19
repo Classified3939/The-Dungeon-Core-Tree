@@ -3,7 +3,8 @@ let modInfo = {
 	id: "dungeoncoreC39",
 	author: "Classified39",
 	pointsName: "Mana",
-	modFiles: ["layers/lore.js", "layers/traps.js", "layers/combat.js", "layers/achievements.js", "tree.js", "gameUtils/loreStrings.js",
+	modFiles: ["layers/lore.js", "layers/traps.js", "layers/combat.js", "layers/achievements.js", "tree.js",
+	"layers/research.js", "layers/heropedia.js", "gameUtils/loreStrings.js", "gameUtils/heroStrings.js",
 	"gameUtils/trapUnit.js","gameUtils/enemyUnit.js", "gameUtils/enemyTypes.js","gameUtils/waveData.js",
 	"gameUtils/trapTypes.js"],
 
@@ -15,14 +16,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.1",
+	name: "3 enemies, 3.5 traps, 0 idea what I'm doing",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+	<h3>v0.1</h3><br>
+		- Added traps, combat, research, achievements, heropedia.<br>
+		- Added warriors, mages, scouts.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -41,6 +42,7 @@ function canGenPoints(){
 
 function getBaseGain(){
 	let base = player.c.points;
+	//base = base.add(200);
 	return base
 }
 
@@ -103,7 +105,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return player.c.points.gte(11);
 }
 
 

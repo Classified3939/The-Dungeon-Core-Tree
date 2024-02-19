@@ -9,7 +9,7 @@ class EnemyUnit{
     }
 
     getDamageDone(attackedObject){
-        return this.baseDamage.mul(this.level);
+        return this.baseDamage;
     }
 
     getDamageTaken(attackingObject){

@@ -4,8 +4,6 @@ addLayer("l", {
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: true,
-        lore2Unlocked: false,
-        lore3Unlocked: false,
         shouldNotify: false,
     }},
     color: "#5f5f5f5",
@@ -21,13 +19,18 @@ addLayer("l", {
         lore2:{
             title: "Attack!",
             body() {return getLore2()},
-            unlocked() {return player.l.lore2Unlocked}
+            unlocked() {return hasAchievement("a", 11)}
         },
         lore3:{
             title: "Victory!",
             body() {return getLore3()},
-            unlocked() {return player.l.lore3Unlocked}
-        }
+            unlocked() {return hasAchievement("a",12)}
+        },
+        lore4:{
+            title: "Keeping Track",
+            body() {return getLore4()},
+            unlocked() {return hasAchievement("a",13)}
+        },
     },
     tabFormat:{
         "Lore":{
@@ -37,6 +40,7 @@ addLayer("l", {
                     ["infobox","lore1"],
                     ["infobox","lore2"],
                     ["infobox","lore3"],
+                    ["infobox","lore4"],
                 ]
         },
     },

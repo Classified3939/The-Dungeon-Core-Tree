@@ -19,3 +19,9 @@ function getLore3(){
     "time to work than before, but you don't want to have to get rid of them one spike at a time. You need to "+
     "think about other kinds of traps you can make..."
 }
+
+function getLore4(){
+    return "Just as you are getting into the groove of killing these warriors, a new type of enemy comes your way. "+
+    "She's got a funny hat, but also a staff with Mana running through it. You decide to devote a section of "+
+    "your mind to keeping track of these so-called 'heroes' and their abilities."
+}
