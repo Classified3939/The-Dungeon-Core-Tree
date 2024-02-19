@@ -153,6 +153,7 @@ addLayer("c", {
         if (Decimal.lte(player.c.combatCooldown,0)) player.c.combatCooldown = new Decimal(0);
     },
     refreshComponents(){
+        if (typeof(WarriorEnemy) === "undefined") return;
         if (typeof(player.c.enemies[0].attack) === "undefined"){
             for (let i = 0; i < player.c.enemies.length; i++){
                 let enemyLevel = player.c.enemies[i].level;
