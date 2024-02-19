@@ -16,11 +16,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1",
-	name: "3 enemies, 3.5 traps, 0 idea what I'm doing",
+	num: "0.1.1",
+	name: "3 enemies, 3.5 traps, 1 hotfix",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.1.1</h3><br>
+		- Hotfix so page doesn't need to be reloaded to work.
 	<h3>v0.1</h3><br>
 		- Added traps, combat, research, achievements, heropedia.<br>
 		- Added warriors, mages, scouts.`
