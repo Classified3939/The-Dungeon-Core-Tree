@@ -25,3 +25,12 @@ function getLore4(){
     "She's got a funny hat, but also a staff with Mana running through it. You decide to devote a section of "+
     "your mind to keeping track of these so-called 'heroes' and their abilities."
 }
+
+
+
+
+function getRandomInfo(){
+    return "Each enemy goes through each set of traps one at a time, unless the enemy dies mid-way through.<br>"+
+        "Enemies still damage traps even in their death throes. They're annoying like that. Your traps are set to "+
+        "do damage even when being destroyed, though, so it evens out."
+}

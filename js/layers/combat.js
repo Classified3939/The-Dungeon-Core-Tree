@@ -1,7 +1,7 @@
 addLayer("c", {
     startData() { return {                  // startData is a function that returns default data for a layer. 
         unlocked: true,
-        points: new Decimal(1),                     // You can add more variables here to add them to your layer.             // "points" is the internal name for the main resource of the layer.
+        points: new Decimal(1),                     // You can add more letiables here to add them to your layer.             // "points" is the internal name for the main resource of the layer.
         traps: [],
         enemies: getWaveData(0),
         combatCooldown: new Decimal(0), 
@@ -24,6 +24,7 @@ addLayer("c", {
             display(){return "<h1>Initiate Combat</h1>"},
             canClick() {return player.c.combatCooldown.lte(0) && player.c.traps.length > 0},
             onClick(){
+                clearInfoString();
                 player.t.points = new Decimal(0);
 
                 setBuyableAmount("t",11,new Decimal(0));
@@ -34,14 +35,26 @@ addLayer("c", {
                 player.c.combatCooldown = new Decimal(5);
                 player.points = new Decimal(0);
                 for (enemy of player.c.enemies){
-                    for (trap of player.c.traps){
-                        if (enemy.killed) continue;
-                        if (trap.usedUp) continue;
-                        enemy.attack(trap);
+                    let enemyHealth = enemy.hitPoints;
+                    for (let i = 0; i < trapTypes.length; i++){
+                        let trapsOfType = player.c.traps.filter((t) => t.id == trapTypes[i]);
+                        if (trapsOfType.length === 0) continue;
+                        for (trap of trapsOfType){
+                            if (enemy.killed) continue;
+                            if (trap.usedUp) continue;
+                            enemy.attack(trap);
+                            if (trap.usedUp) destroyTrap(trap.name,enemy.name);
+                        }
+                    }
+                    if (enemy.killed) killEnemy(enemy.name,enemy.level);
+                    else if (enemyHealth.sub(enemy.hitPoints).gte(1)){
+                        woundEnemy(enemy.name,enemyHealth.sub(enemy.hitPoints));
                     }
                 }
                 player.c.traps = player.c.traps.filter((t) => !t.usedUp);
+                finishInfo();
                 if (player.c.enemies.filter((e)=> !e.killed).length === 0){
+                    nextWaveInfo();
                     if (waveData[player.c.points]){
                         player.c.enemies = getWaveData(player.c.points);
                         player.c.points = player.c.points.add(1);
@@ -59,16 +72,16 @@ addLayer("c", {
         () => {return "You have been challenged by wave <h1 style='color:#8B0000'>" + player.c.points + "</h1>"}],
         ["display-text",
         () => {
-            var waveString = "It features:<br>";
-            var enemyName = player.c.enemies[0].name;
-            var enemyLevel = player.c.enemies[0].level;
-            var enemyHealth = player.c.enemies[0].hitPoints
+            let waveString = "It features:<br>";
+            let enemyName = player.c.enemies[0].name;
+            let enemyLevel = player.c.enemies[0].level;
+            let enemyHealth = player.c.enemies[0].hitPoints
             if (player.c.enemies.length == 1){
                 waveString = waveString + "1x " + enemyName + " ("+ enemyHealth + " Health)";
                 return waveString;
             }
-            var enemyNumber = new Decimal(0);
-            var totalEnemyHealth = new Decimal(0);
+            let enemyNumber = new Decimal(0);
+            let totalEnemyHealth = new Decimal(0);
             for (let i = 0; i < player.c.enemies.length; i++){
                 if (player.c.enemies[i].name == enemyName && new Decimal(player.c.enemies[i].level).equals(enemyLevel)){
                     enemyNumber = enemyNumber.add(1);
@@ -117,36 +130,16 @@ addLayer("c", {
             attackString = attackString + "<br>You can do " + allBaseDamage + " damage per enemy (so long as nothing breaks)."+
             "<br>If fighting many enemies, you might be able to do " + allTotalDamage + " damage total.";
             return attackString;
-            /*let trapNumber = 0;
-            for (let i = 0; i < player.c.traps.length; i++){
-                if (player.c.traps[i].name == trapName && new Decimal(player.c.traps[i].hitPoints).equals(trapHealth)){
-                    trapNumber++;
-                    baseDamage = baseDamage.add(trapDamage);
-                    totalDamage = totalDamage.add(Decimal.times(trapDamage,trapHealth));
-                }
-                else{
-                    attackString = attackString + "You have " + trapNumber + " " + 
-                        trapName + " (" + Decimal.mul(trapDamage,trapNumber) + 
-                        " damage) with " + trapHealth + " hitpoints remaining<br>";
-                    trapName = player.c.traps[i].name;
-                    trapHealth = player.c.traps[i].hitPoints;
-                    trapDamage = player.c.traps[i].damage;
-                    trapNumber = 1;
-                    baseDamage = baseDamage.add(trapDamage);
-                    totalDamage = totalDamage.add(Decimal.times(trapDamage,trapHealth));
-                }
-                                attackString = attackString + "You have " + trapNumber + " " + trapName + 
-                " (" + Decimal.mul(trapDamage,trapNumber) + " damage) with " + trapHealth 
-                + " hitpoints remaining<br>";
-                attackString = attackString + 
-                    "<br>You do a base of " + baseDamage + " damage to each enemy hit.<br>";
-                attackString = attackString + 
-                    "Each enemy goes through all traps once, unless the enemy is killed or the trap breaks.<br>";
-                attackString = attackString + 
-                    "If facing many enemies, you might deal  up to " + totalDamage + " damage total."
-            }*/
         }],
+        "blank", "blank",
+        ["infobox","combatInfo"]
     ],
+    infoboxes:{
+        combatInfo:{
+            title: "Battle Recap",
+            body() { return combatInfoString}
+        }
+    },
     branches: ["t"],
     update(diff){
         player.c.combatCooldown = player.c.combatCooldown.sub(diff);

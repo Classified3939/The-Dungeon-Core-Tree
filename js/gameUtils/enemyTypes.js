@@ -51,3 +51,4 @@ class ScoutEnemy extends EnemyUnit{
     }
 }
 
+const enemyTypes = ["warriorEnemy","mageEnemy","scoutEnemy"];

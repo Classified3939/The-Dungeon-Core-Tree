@@ -31,6 +31,10 @@ addLayer("l", {
             body() {return getLore4()},
             unlocked() {return hasAchievement("a",13)}
         },
+        randomInfo:{
+            title: "Misc Stuff",
+            body() {return getRandomInfo()},
+        },
     },
     tabFormat:{
         "Lore":{
@@ -43,6 +47,13 @@ addLayer("l", {
                     ["infobox","lore4"],
                 ]
         },
+        "Random Info":{
+            buttonStyle(){return {'color':'white'}},
+            content:
+            [
+                ["infobox","randomInfo"]
+            ]
+        }
     },
     update(diff){
         if (player.tab === "l") player.l.shouldNotify = false;

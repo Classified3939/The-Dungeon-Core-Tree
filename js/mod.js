@@ -6,7 +6,7 @@ let modInfo = {
 	modFiles: ["layers/lore.js", "layers/traps.js", "layers/combat.js", "layers/achievements.js", "tree.js",
 	"layers/research.js", "layers/heropedia.js", "gameUtils/loreStrings.js", "gameUtils/heroStrings.js",
 	"gameUtils/trapUnit.js","gameUtils/enemyUnit.js", "gameUtils/enemyTypes.js","gameUtils/waveData.js",
-	"gameUtils/trapTypes.js"],
+	"gameUtils/trapTypes.js", "gameUtils/combatInfo.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -16,16 +16,20 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1.1",
-	name: "3 enemies, 3.5 traps, 1 hotfix",
+	num: "0.1.2",
+	name: "stats for neeeerds",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.1.1</h3><br>
-		- Hotfix so page doesn't need to be reloaded to work.
-	<h3>v0.1</h3><br>
-		- Added traps, combat, research, achievements, heropedia.<br>
-		- Added warriors, mages, scouts.`
+
+	<h3>v0.1.2</h3>
+		<br>- Added battle recap, an after action replay of the combat that just happened. should make things more clear.
+		<br>- Also buffed research point gain in anticipation of a rework for it.
+	<br><h3>v0.1.1</h3>
+		<br>- Hotfix so page doesn't need to be reloaded to work.
+	<br><h3>v0.1</h3>
+		<br>- Added traps, combat, research, achievements, heropedia.
+		<br>- Added warriors, mages, scouts.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
