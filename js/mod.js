@@ -5,8 +5,7 @@ let modInfo = {
 	pointsName: "Mana",
 	modFiles: ["layers/lore.js", "layers/traps.js", "layers/combat.js", "layers/achievements.js", "tree.js",
 	"layers/research.js", "layers/heropedia.js", "gameUtils/loreStrings.js", "gameUtils/heroStrings.js",
-	"gameUtils/trapUnit.js","gameUtils/enemyUnit.js", "gameUtils/enemyTypes.js","gameUtils/waveData.js",
-	"gameUtils/trapTypes.js", "gameUtils/combatInfo.js"],
+	"gameUtils/waveData.js", "gameUtils/combatInfo.js"],
 
 	discordName: "",
 	discordLink: "",
