@@ -15,8 +15,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1.2",
-	name: "stats for neeeerds",
+	num: "0.1.2b",
+	name: "stats for neeeerds (+hotfix)",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -24,6 +24,7 @@ let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.1.2</h3>
 		<br>- Added battle recap, an after action replay of the combat that just happened. should make things more clear.
 		<br>- Also buffed research point gain in anticipation of a rework for it.
+		<br>- Once again tried to squish the bug i tHOUGHT 0.1.1 fixed.
 	<br><h3>v0.1.1</h3>
 		<br>- Hotfix so page doesn't need to be reloaded to work.
 	<br><h3>v0.1</h3>
