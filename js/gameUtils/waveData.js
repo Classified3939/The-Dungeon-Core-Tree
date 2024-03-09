@@ -1,5 +1,8 @@
 
 function getWaveData(waveNumber){
+    if (typeof(WarriorEnemy) === "undefined"){
+        return;
+    }
     let currentWave = waveData[waveNumber];
     let enemyArray = [];
     for (let enemy of currentWave){
